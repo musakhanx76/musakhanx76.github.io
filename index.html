@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Musa Khan — Flutter Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F6F8;
+    --panel:#FFFFFF;
+    --ink:#10141C;
+    --ink-soft:#4B5563;
+    --line:#D9DFE5;
+    --amber:#F2A93B;
+    --amber-dim:#F2A93B33;
+    --teal:#157A64;
+    --teal-dim:#157A6414;
+    --mono:'IBM Plex Mono',monospace;
+    --sans:'IBM Plex Sans',sans-serif;
+    --disp:'Space Grotesk',sans-serif;
+    --maxw:920px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  ::selection{background:var(--amber-dim);}
+  :focus-visible{outline:2px solid var(--teal);outline-offset:3px;}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+
+  /* ---- top bar ---- */
+  .topbar{
+    position:sticky;top:0;z-index:20;
+    background:rgba(244,246,248,0.9);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-top:16px;padding-bottom:16px;
+  }
+  .topbar .mark{
+    font-family:var(--mono);font-size:13px;letter-spacing:.06em;
+    display:flex;align-items:center;gap:8px;
+  }
+  .topbar .mark .dot{
+    width:7px;height:7px;border-radius:50%;background:var(--teal);
+    box-shadow:0 0 0 3px var(--teal-dim);
+  }
+  .topnav{display:flex;gap:26px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;}
+  .topnav a{text-decoration:none;color:var(--ink-soft);border-bottom:1px solid transparent;padding-bottom:2px;transition:color .15s,border-color .15s;}
+  .topnav a:hover{color:var(--ink);border-color:var(--amber);}
+  @media (max-width:640px){.topnav{gap:16px;}.topnav a{display:none;}.topnav a:nth-child(3),.topnav a:nth-child(4){display:inline;}}
+
+  /* ---- viewfinder frame (signature element) ---- */
+  .vf{position:relative;}
+  .vf::before,.vf::after,.vf .c2,.vf .c3{
+    content:"";position:absolute;width:22px;height:22px;
+    border:2px solid var(--amber);
+  }
+  .vf::before{top:-2px;left:-2px;border-right:none;border-bottom:none;}
+  .vf::after{bottom:-2px;right:-2px;border-left:none;border-top:none;}
+  .vf .c2{top:-2px;right:-2px;border-left:none;border-bottom:none;}
+  .vf .c3{bottom:-2px;left:-2px;border-right:none;border-top:none;}
+  .vf-sm::before,.vf-sm::after,.vf-sm .c2,.vf-sm .c3{width:14px;height:14px;border-width:1.5px;border-color:var(--ink-soft);opacity:.55;}
+
+  .scanline{
+    position:absolute;left:0;right:0;top:0;height:2px;
+    background:linear-gradient(90deg,transparent,var(--amber) 20%,var(--amber) 80%,transparent);
+    box-shadow:0 0 14px 2px var(--amber-dim);
+    animation:sweep 2.1s cubic-bezier(.4,0,.2,1) 1 both;
+    opacity:0;
+  }
+  @keyframes sweep{
+    0%{top:0;opacity:0;}
+    8%{opacity:1;}
+    92%{opacity:1;}
+    100%{top:100%;opacity:0;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .scanline{animation:none;display:none;}
+    .status .dot{animation:none !important;}
+  }
+
+  /* ---- hero ---- */
+  .hero{padding:96px 0 64px;}
+  .hero-inner{position:relative;padding:44px 40px;background:var(--panel);border:1px solid var(--line);overflow:hidden;}
+  .eyebrow{
+    font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--teal);margin:0 0 18px;
+  }
+  h1.name{
+    font-family:var(--disp);font-weight:600;font-size:clamp(38px,6vw,58px);
+    line-height:1.05;margin:0 0 10px;letter-spacing:-.01em;
+  }
+  .role{
+    font-family:var(--disp);font-weight:500;font-size:clamp(18px,2.4vw,22px);
+    color:var(--ink-soft);margin:0 0 30px;
+  }
+  .status{
+    display:inline-flex;align-items:center;gap:10px;
+    font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;
+    background:var(--teal-dim);border:1px solid var(--teal);color:var(--teal);
+    padding:7px 12px;margin-bottom:34px;
+  }
+  .status .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 1.8s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+
+  .hud{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+    background:var(--line);border:1px solid var(--line);margin-bottom:34px;
+  }
+  .hud div{background:var(--panel);padding:14px 16px;}
+  .hud .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink-soft);text-transform:uppercase;display:block;margin-bottom:5px;}
+  .hud .v{font-family:var(--mono);font-size:13px;color:var(--ink);}
+  @media (max-width:640px){.hud{grid-template-columns:1fr;}}
+
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;
+    padding:12px 20px;text-decoration:none;border:1px solid var(--ink);color:var(--ink);
+    transition:background .15s,color .15s;
+  }
+  .btn.primary{background:var(--ink);color:var(--bg);}
+  .btn.primary:hover{background:var(--teal);border-color:var(--teal);}
+  .btn:not(.primary):hover{background:var(--ink);color:var(--bg);}
+
+  /* ---- sections ---- */
+  section{padding:64px 0;border-top:1px solid var(--line);}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:30px;}
+  .sec-num{font-family:var(--mono);font-size:12px;color:var(--amber);}
+  h2{font-family:var(--disp);font-size:26px;font-weight:600;margin:0;letter-spacing:-.01em;}
+
+  .about p{font-size:16px;color:var(--ink-soft);max-width:680px;margin:0 0 16px;}
+  .about strong{color:var(--ink);font-weight:600;}
+
+  .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media (max-width:640px){.skills-grid{grid-template-columns:1fr;}}
+  .skill-card{position:relative;background:var(--panel);border:1px solid var(--line);padding:20px 22px;}
+  .skill-card .cat{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);display:block;margin-bottom:10px;}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;}
+  .tag{font-family:var(--mono);font-size:12.5px;background:var(--bg);border:1px solid var(--line);padding:5px 10px;color:var(--ink);}
+
+  .project-card{position:relative;background:var(--panel);border:1px solid var(--line);padding:38px;}
+  .project-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;margin-bottom:6px;}
+  .project-title{font-family:var(--disp);font-size:22px;font-weight:600;margin:0;}
+  .project-link{font-family:var(--mono);font-size:12.5px;color:var(--teal);text-decoration:none;border-bottom:1px solid var(--teal);white-space:nowrap;}
+  .project-sub{color:var(--ink-soft);font-size:14px;font-style:italic;margin:0 0 22px;}
+  .metrics{display:flex;gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:26px;}
+  .metric{flex:1;background:var(--panel);padding:16px 14px;text-align:left;}
+  .metric .num{font-family:var(--disp);font-size:26px;font-weight:600;color:var(--teal);display:block;}
+  .metric .lbl{font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em;}
+  @media (max-width:640px){.metrics{flex-direction:column;}}
+  ul.bullets{margin:0 0 22px;padding:0;list-style:none;}
+  ul.bullets li{position:relative;padding-left:22px;margin-bottom:11px;font-size:14.5px;color:var(--ink-soft);}
+  ul.bullets li::before{content:"›";position:absolute;left:0;color:var(--amber);font-weight:700;font-family:var(--mono);}
+
+  .edu-row{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:18px 0;border-bottom:1px solid var(--line);}
+  .edu-row:last-child{border-bottom:none;}
+  .edu-row .t{font-weight:600;}
+  .edu-row .s{color:var(--ink-soft);font-size:14px;}
+  .edu-row .d{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);white-space:nowrap;}
+
+  footer{padding:70px 0 60px;border-top:1px solid var(--line);}
+  .contact-inner{position:relative;background:var(--ink);color:var(--bg);padding:44px 40px;}
+  .contact-inner h2{color:var(--bg);}
+  .contact-inner .eyebrow{color:var(--amber);}
+  .contact-inner p{color:#B9C0CA;max-width:520px;margin:0 0 28px;font-size:15px;}
+  .contact-links{display:flex;flex-wrap:wrap;gap:12px;}
+  .contact-links a{
+    font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;
+    border:1px solid #3A4150;padding:10px 16px;text-decoration:none;color:var(--bg);
+    transition:border-color .15s,color .15s;
+  }
+  .contact-links a:hover{border-color:var(--amber);color:var(--amber);}
+  .fine{font-family:var(--mono);font-size:11px;color:#6B7280;margin-top:40px;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="mark"><span class="dot"></span>MUSA KHAN</div>
+    <nav class="topnav">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-inner vf">
+      <span class="c2"></span><span class="c3"></span>
+      <div class="scanline"></div>
+      <p class="eyebrow">// Flutter Developer</p>
+      <h1 class="name">Musa Khan</h1>
+      <p class="role">Flutter Developer Intern Candidate</p>
+
+      <div class="status"><span class="dot"></span>OPEN TO WORK — FLUTTER DEVELOPER INTERNSHIP</div>
+
+      <div class="hud">
+        <div><span class="k">Based in</span><span class="v">Mansehra, Pakistan</span></div>
+        <div><span class="k">Targeting</span><span class="v">Islamabad</span></div>
+        <div><span class="k">Education</span><span class="v">BS Computer Science</span></div>
+      </div>
+
+      <div class="cta-row">
+        <a class="btn primary" href="#projects">View Projects</a>
+        <a class="btn" href="Musa_Khan_CV.pdf" target="_blank" rel="noopener">Download CV</a>
+        <a class="btn" href="mailto:musakhanx76@gmail.com">Email Me</a>
+        <a class="btn" href="https://github.com/musakhanx76" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">01</span><h2>About</h2></div>
+    <div class="about">
+      <p>I'm a Computer Science graduate from Hazara University with hands-on Flutter development experience gained through university lab work and independent projects. I build cross-platform mobile interfaces with Flutter and Dart, connect them to backend services with Django REST Framework and PostgreSQL, and I pick up new tools quickly whenever a project calls for them.</p>
+      <p>My two flagship builds: SmartAttendance_FYP, an AI-driven attendance app with real-time face recognition for 40+ users, and CoinVault, a real-time cryptocurrency tracker. Both are detailed below.</p>
+      <p>Right now I'm looking for a Flutter Developer internship in Islamabad.</p>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Experience</h2></div>
+    <div class="edu-row" style="border-bottom:none;padding-top:0;">
+      <div><div class="t">Flutter Developer — Hazara University Software Development Lab</div><div class="s">Mansehra, Pakistan</div></div>
+      <div class="d">Jun 2025 – Apr 2026</div>
+    </div>
+    <ul class="bullets" style="margin-top:14px;">
+      <li>Built and refined Flutter/Dart UI components for mobile app projects as part of ongoing lab work.</li>
+      <li>Practiced connecting mobile front-ends to backend services and databases, including REST API integration.</li>
+      <li>Used Git and GitHub for version control across lab and coursework projects.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Skills</h2></div>
+    <div class="skills-grid">
+      <div class="skill-card vf vf-sm"><span class="c2"></span><span class="c3"></span>
+        <span class="cat">Mobile &amp; Frontend</span>
+        <div class="tags"><span class="tag">Flutter</span><span class="tag">Dart</span></div>
+      </div>
+      <div class="skill-card vf vf-sm"><span class="c2"></span><span class="c3"></span>
+        <span class="cat">Backend &amp; APIs</span>
+        <div class="tags"><span class="tag">Django</span><span class="tag">Django REST Framework</span><span class="tag">PostgreSQL</span></div>
+      </div>
+      <div class="skill-card vf vf-sm"><span class="c2"></span><span class="c3"></span>
+        <span class="cat">AI &amp; Computer Vision</span>
+        <div class="tags"><span class="tag">OpenCV</span><span class="tag">dlib</span><span class="tag">face_recognition</span></div>
+      </div>
+      <div class="skill-card vf vf-sm"><span class="c2"></span><span class="c3"></span>
+        <span class="cat">Tools &amp; Version Control</span>
+        <div class="tags"><span class="tag">Git</span><span class="tag">GitHub</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Projects</h2></div>
+    <div class="project-card vf"><span class="c2"></span><span class="c3"></span>
+      <div class="project-top">
+        <h3 class="project-title">SmartAttendance_FYP</h3>
+        <a class="project-link" href="https://github.com/musakhanx76/SmartAttendance_FYP_Development" target="_blank" rel="noopener">github.com/musakhanx76/SmartAttendance_FYP_Development →</a>
+      </div>
+      <p class="project-sub">AI-driven mobile attendance application with real-time face-scanning recognition.</p>
+
+      <div class="metrics">
+        <div class="metric"><span class="num">93%</span><span class="lbl">Less manual processing time</span></div>
+        <div class="metric"><span class="num">40+</span><span class="lbl">Active end users</span></div>
+        <div class="metric"><span class="num">E2E</span><span class="lbl">Mobile · API · DB · AI</span></div>
+      </div>
+
+      <ul class="bullets">
+        <li>Built a cross-platform Flutter app with an intuitive UI/UX for 40+ end users to mark and track attendance in real time.</li>
+        <li>Architected RESTful API endpoints in Django REST Framework to handle authentication, attendance records, and AI-model communication — cutting manual attendance processing time by 93%.</li>
+        <li>Integrated a face-scanning module using OpenCV, dlib, and face_recognition into the mobile pipeline for real-time identification and automated logging.</li>
+        <li>Designed the relational database schema in PostgreSQL to store and query user, session, and attendance data efficiently.</li>
+        <li>Maintained version control and a collaborative Git/GitHub workflow with an organized commit history and reproducible builds.</li>
+      </ul>
+    </div>
+
+    <div class="project-card vf" style="margin-top:24px;"><span class="c2"></span><span class="c3"></span>
+      <div class="project-top">
+        <h3 class="project-title">CoinVault</h3>
+        <a class="project-link" href="https://github.com/musakhanx76/CoinVault" target="_blank" rel="noopener">github.com/musakhanx76/CoinVault →</a>
+      </div>
+      <p class="project-sub">Real-time cryptocurrency tracking application built with Flutter and Dart.</p>
+
+      <ul class="bullets">
+        <li>Built a responsive mobile dashboard consuming the CoinGecko public REST API to display live prices, 24-hour market movement, and 7-day historical trends.</li>
+        <li>Rendered interactive price trendlines using the fl_chart package.</li>
+        <li>Implemented client-side search filtering and local caching with shared_preferences to persist a user's favorite watchlist.</li>
+        <li>Managed asynchronous data states, loading indicators, and network error handling using Provider.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Education &amp; Certification</h2></div>
+    <div class="edu-row">
+      <div><div class="t">Bachelor of Science, Computer Science</div><div class="s">Hazara University, Mansehra, Pakistan</div></div>
+      <div class="d">Sep 2022 – Jul 2026</div>
+    </div>
+    <div class="edu-row">
+      <div><div class="t">Web Designing</div><div class="s">FiveD Official</div></div>
+      <div class="d">2022</div>
+    </div>
+    <div class="edu-row">
+      <div><div class="t">Flutter Certification</div><div class="s">Simplilearn</div></div>
+      <div class="d">In Progress, 2026</div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="contact-inner vf"><span class="c2"></span><span class="c3"></span>
+      <p class="eyebrow">// Get in touch</p>
+      <h2>Let's talk.</h2>
+      <p>I'm currently looking for a Flutter Developer internship in Islamabad. If you're hiring, or you know someone who is, I'd love to hear from you.</p>
+      <div class="contact-links">
+        <a href="mailto:musakhanx76@gmail.com">musakhanx76@gmail.com</a>
+        <a href="tel:+923135546356">+92 313 5546356</a>
+        <a href="https://github.com/musakhanx76" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/musakhanx76" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+      <p class="fine">Mansehra, Pakistan</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
