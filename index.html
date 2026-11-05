@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Musa Khan — Flutter Developer</title>
+<title>Musa Khan | Flutter Developer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -170,6 +170,8 @@
   .edu-row:last-child{border-bottom:none;}
   .edu-row .t{font-weight:600;}
   .edu-row .s{color:var(--ink-soft);font-size:14px;}
+  .edu-row .s a{color:var(--teal);text-decoration:none;border-bottom:1px solid var(--teal);}
+  .badge{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--amber);border:1px solid var(--amber);padding:3px 9px;white-space:nowrap;}
   .edu-row .d{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);white-space:nowrap;}
 
   footer{padding:70px 0 60px;border-top:1px solid var(--line);}
@@ -210,7 +212,7 @@
       <h1 class="name">Musa Khan</h1>
       <p class="role">Flutter Developer | 9 Months Experience</p>
 
-      <div class="status"><span class="dot"></span>OPEN TO WORK — FLUTTER DEVELOPER INTERNSHIP</div>
+      <div class="status"><span class="dot"></span>OPEN TO WORK: FLUTTER DEVELOPER INTERNSHIP</div>
 
       <div class="hud">
         <div><span class="k">Based in</span><span class="v">Islamabad, Pakistan</span></div>
@@ -233,7 +235,7 @@
     <div class="sec-head"><span class="sec-num">01</span><h2>About</h2></div>
     <div class="about">
       <p>I'm a Computer Science graduate from Hazara University with hands-on Flutter development experience gained through university lab work and independent projects. I build cross-platform mobile interfaces with Flutter and Dart, connect them to backend services with Django REST Framework and PostgreSQL, and I pick up new tools quickly whenever a project calls for them.</p>
-      <p>My two flagship builds: SmartAttendance_FYP, an AI-driven attendance app with real-time face recognition for 40+ users, and CoinVault, a real-time cryptocurrency tracker. Both are detailed below.</p>
+      <p>My two flagship builds: SmartAttendance_FYP, an AI-driven attendance app with real-time face recognition for 40+ users, and CoinVault, a real-time cryptocurrency tracker. I'm now building QistFlow, a shop management system for installment sales. All three are detailed below.</p>
       <p>Right now I'm looking for a Flutter Developer internship in Islamabad.</p>
     </div>
   </div>
@@ -243,7 +245,7 @@
   <div class="wrap">
     <div class="sec-head"><span class="sec-num">02</span><h2>Experience</h2></div>
     <div class="edu-row" style="border-bottom:none;padding-top:0;">
-      <div><div class="t">Flutter Developer — Hazara University Software Development Lab</div><div class="s">Mansehra, Pakistan</div></div>
+      <div><div class="t">Flutter Developer, Hazara University Software Development Lab</div><div class="s">Mansehra, Pakistan</div></div>
       <div class="d">Jun 2025 – Apr 2026</div>
     </div>
     <ul class="bullets" style="margin-top:14px;">
@@ -264,7 +266,7 @@
       </div>
       <div class="skill-card vf vf-sm"><span class="c2"></span><span class="c3"></span>
         <span class="cat">Backend &amp; APIs</span>
-        <div class="tags"><span class="tag">Django</span><span class="tag">Django REST Framework</span><span class="tag">PostgreSQL</span></div>
+        <div class="tags"><span class="tag">Python</span><span class="tag">Django</span><span class="tag">Django REST Framework</span><span class="tag">PostgreSQL</span><span class="tag">SQL</span></div>
       </div>
       <div class="skill-card vf vf-sm"><span class="c2"></span><span class="c3"></span>
         <span class="cat">AI &amp; Computer Vision</span>
@@ -296,7 +298,7 @@
 
       <ul class="bullets">
         <li>Built a cross-platform Flutter app with an intuitive UI/UX for 40+ end users to mark and track attendance in real time.</li>
-        <li>Architected RESTful API endpoints in Django REST Framework to handle authentication, attendance records, and AI-model communication — cutting manual attendance processing time by 93%.</li>
+        <li>Architected RESTful API endpoints in Django REST Framework to handle authentication, attendance records, and AI-model communication, cutting manual attendance processing time by 93%.</li>
         <li>Integrated a face-scanning module using OpenCV, dlib, and face_recognition into the mobile pipeline for real-time identification and automated logging.</li>
         <li>Designed the relational database schema in PostgreSQL to store and query user, session, and attendance data efficiently.</li>
         <li>Maintained version control and a collaborative Git/GitHub workflow with an organized commit history and reproducible builds.</li>
@@ -317,12 +319,25 @@
         <li>Managed asynchronous data states, loading indicators, and network error handling using Provider.</li>
       </ul>
     </div>
+
+    <div class="project-card vf" style="margin-top:24px;"><span class="c2"></span><span class="c3"></span>
+      <div class="project-top">
+        <h3 class="project-title">QistFlow</h3>
+        <span class="badge">In progress</span>
+      </div>
+      <p class="project-sub">Multi-tenant installment ERP and ledger engine for retail appliance merchants. Tech: Django, Django REST Framework, PostgreSQL, Flutter.</p>
+
+      <ul class="bullets">
+        <li>Building a multi-tenant hire-purchase and serialized inventory system for appliance shops, with a financial math engine for custom markup tiers and automated payment schedules.</li>
+        <li>Designing a ledger pipeline for cash payment allocation and automated inventory-to-customer ownership transitions.</li>
+      </ul>
+    </div>
   </div>
 </section>
 
 <section id="education">
   <div class="wrap">
-    <div class="sec-head"><span class="sec-num">05</span><h2>Education &amp; Certification</h2></div>
+    <div class="sec-head"><span class="sec-num">05</span><h2>Education &amp; Certifications</h2></div>
     <div class="edu-row">
       <div><div class="t">Bachelor of Science, Computer Science</div><div class="s">Hazara University, Mansehra, Pakistan</div></div>
       <div class="d">Sep 2022 – Jul 2026</div>
@@ -332,8 +347,12 @@
       <div class="d">2022</div>
     </div>
     <div class="edu-row">
-      <div><div class="t">Flutter Certification</div><div class="s">Simplilearn</div></div>
-      <div class="d">In Progress, 2026</div>
+      <div><div class="t">Getting Started with Flutter &amp; Dart</div><div class="s">Packt, offered through Coursera · <a href="https://coursera.org/verify/A9PBWVHGP9AC" target="_blank" rel="noopener">Verify credential</a></div></div>
+      <div class="d">Nov 2026</div>
+    </div>
+    <div class="edu-row">
+      <div><div class="t">Introduction to Flutter</div><div class="s">Simplilearn</div></div>
+      <div class="d">2026</div>
     </div>
   </div>
 </section>
